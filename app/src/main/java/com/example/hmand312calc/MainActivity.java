@@ -2,10 +2,16 @@ package com.example.hmand312calc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+
+import android.widget.Switch;
 import android.widget.TextView;
+
+import static android.view.View.VISIBLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
     Button btnPlus;
     Button btnEqual;
     TextView txtResult;
+    Switch mSwitch;
+    Switch nSwitch;
     String result;
+    View standardLayout;
+    View ingLayout;
     Calculator calculator = new Calculator();
 
     @Override
@@ -60,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         btnMin = findViewById(R.id.btnMin);
         btnPlus = findViewById(R.id.btnPlus);
         btnEqual = findViewById(R.id.btnEqually);
+        mSwitch = findViewById(R.id.switch1);
+        nSwitch = findViewById(R.id.switch2);
 
         txtResult.setText("0");
 
@@ -82,7 +94,15 @@ public class MainActivity extends AppCompatActivity {
         btnMin.setOnClickListener(onClick);
         btnPlus.setOnClickListener(onClick);
         btnEqual.setOnClickListener(onClick);
+
+        standardLayout = findViewById(R.id.linearLayoutStandard);
+        ingLayout = findViewById(R.id.ingLayout);
+        mSwitch.setOnCheckedChangeListener(switchCheck);
+        nSwitch.setOnCheckedChangeListener(switchCheck);
+
+
     }
+
 
     Button.OnClickListener onClick = new View.OnClickListener() {
         @Override
@@ -140,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     result = calculator.getAction(Action.MIN);
                     break;
                 case R.id.btnSign:
-                    result= calculator.getAction(Action.SING);
+                    result = calculator.getAction(Action.SING);
                     break;
                 case R.id.btnEqually:
                     result = calculator.getAction(Action.EQUAL);
@@ -152,7 +172,24 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+    final Switch.OnCheckedChangeListener switchCheck = new Switch.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) {
+                standardLayout.setVisibility(View.INVISIBLE);
+                ingLayout.setVisibility(VISIBLE);
+            } else {
+                standardLayout.setVisibility(VISIBLE);
+                ingLayout.setVisibility(View.INVISIBLE);
+            }
+        }
+    };
+
+
 }
+
+
+
 
 
 
